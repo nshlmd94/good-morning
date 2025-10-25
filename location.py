@@ -31,7 +31,7 @@ def locationAccess():
         return country, region, city, latitude, longitude
     
     except KeyError as e:
-        sys.exit("The key {e} does not exist in the dictionary.")
+        sys.exit(f"The key {e} does not exist in the dictionary.")
     except requests.exceptions.ConnectionError as e:
         sys.exit("A connection error occurred.")
     except requests.exceptions.HTTPError as e:
