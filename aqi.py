@@ -43,13 +43,12 @@ class AQI():
 def main():
     postAQI()
 
-def fetchAQI():
-    lat, lon, city = locationAccess()
+def fetchAQI(lat, lon):
     accessAQI = AQI(lat, lon).getAQI()
     return accessAQI
 
-def postAQI():
-    aqi = str(fetchAQI())
+def postAQI(lat, lon):
+    aqi = str(fetchAQI(lat, lon))
 
     aqiLookup = {
             "1": "Good",

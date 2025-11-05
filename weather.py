@@ -21,17 +21,16 @@ class Weather():
 def main():
     fetchWeather()
 
-def fetchWeather():
+def fetchWeather(lat, lon):
 
     try:
-        lat, lon, city = locationAccess()
         weather = Weather(lat, lon)
         requestWeather = weather.getWeather()
         temp = requestWeather['main']['temp']
         description = requestWeather['weather'][0]['main']
-            #apparently there is a "safe access" way to write this: temp = requestWeather.get("main", {}).get("temp") NEED TO LEARN THIS LATER"
+        #apparently there is a "safe access" way to write this: temp = requestWeather.get("main", {}).get("temp") NEED TO LEARN THIS LATER"
 
-        return temp, description, city
+        return temp, description
 
     except KeyError as e:
         sys.exit(f"Weather: The key {e} does not exist in the dictionary.")
