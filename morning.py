@@ -1,32 +1,43 @@
 import csv
 import os
 import datetime
+from dataclasses import dataclass
 
 from location import locationAccess
 from weather import fetchWeather
 from aqi import fetchAQI, postAQI
 
 class Morning():
-    def __init__(self, output="", log=""):
+    def __init__(self, output=""):
         self.output = output
-        self.log = log
 
     def getReady(self):
         lat, lon, city = locationAccess()
         weather, description = fetchWeather(lat, lon)
         aqi = postAQI(lat, lon)
 
+        morningData = {
+            'city': city, 
+            'weather': weather, 
+            'description': description, 
+            'aqi': aqi
+        }
+
+        self._logCalls(morningData)
+        self._formatOutput(morningData)
+
+    def _logCalls(self, morningData):
         timestamp = datetime.datetime.now()
 
         fileExists = os.path.exists("logs.csv")
-
         with open("logs.csv", 'a', newline='') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=['timestamp', 'city', 'weather', 'description', 'aqi'])
             if not fileExists or os.path.getsize("logs.csv") == 0:
                 writer.writeheader()
-            writer.writerow({'timestamp': timestamp, 'city': city, 'weather': weather, 'description': description, 'aqi': aqi})
+            writer.writerow({'timestamp': timestamp, 'city': morningData['city'], 'weather': morningData['weather'], 'description': morningData['description'], 'aqi': morningData['aqi']})
 
-        self.output = f"The temperature in {city} is {round(weather-273.15)}°C with {description} and the AQI is {aqi}."
+    def _formatOutput(self, morningData):
+        self.output = f"The temperature in {morningData['city']} is {round(morningData['weather']-273.15)}°C with {morningData['description']} and the AQI is {morningData['aqi']}."
 
     def __str__(self) -> str:
         return self.output
