@@ -23,16 +23,17 @@ class Morning():
             'aqi': aqi
         }
 
+        # Users shouldn't call these method independently
         self._logCalls(morningData)
         self._formatOutput(morningData)
 
     def _logCalls(self, morningData):
         timestamp = datetime.datetime.now()
 
-        fileExists = os.path.exists("logs.csv")
-        with open("logs.csv", 'a', newline='') as csvfile:
+        fileExists = os.path.exists("data.csv")
+        with open("data.csv", 'a', newline='') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=['timestamp', 'city', 'weather', 'description', 'aqi'])
-            if not fileExists or os.path.getsize("logs.csv") == 0:
+            if not fileExists or os.path.getsize("data.csv") == 0:
                 writer.writeheader()
             writer.writerow({'timestamp': timestamp, 'city': morningData['city'], 'weather': morningData['weather'], 'description': morningData['description'], 'aqi': morningData['aqi']})
 
