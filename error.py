@@ -23,6 +23,8 @@ def errorHandling(func):
             print("Error, check logs.")
             raise
 
+            # if I wanted the program to run irrespective, then instead of 'raise', I could have just done 'return None' and the program doesn't crash and continues with partial data, but I want it to crash for my usecase
+
         finally:
             logger(timestamp, func.__name__, status, message)
 
