@@ -4,6 +4,7 @@ import requests
 import json
 
 from location import locationAccess
+from error import errorHandling
 
 class Weather():
     def __init__(self, latitude, longitude, output=None):
@@ -21,35 +22,15 @@ class Weather():
 def main():
     fetchWeather()
 
+@errorHandling
 def fetchWeather(lat, lon):
+    weather = Weather(lat, lon)
+    requestWeather = weather.getWeather()
+    temp = requestWeather['main']['temp']
+    description = requestWeather['weather'][0]['main']
+    #apparently there is a "safe access" way to write this: temp = requestWeather.get("main", {}).get("temp") NEED TO LEARN THIS LATER"
 
-    try:
-        weather = Weather(lat, lon)
-        requestWeather = weather.getWeather()
-        temp = requestWeather['main']['temp']
-        description = requestWeather['weather'][0]['main']
-        #apparently there is a "safe access" way to write this: temp = requestWeather.get("main", {}).get("temp") NEED TO LEARN THIS LATER"
-
-        return temp, description
-
-    except KeyError as e:
-        sys.exit(f"Weather: The key {e} does not exist in the dictionary.")
-    except requests.exceptions.ConnectionError as e:
-        sys.exit("Weather: A connection error occurred.")
-    except requests.exceptions.HTTPError as e:
-        sys.exit("Weather: An HTTP error occurred.")
-    except requests.exceptions.ConnectTimeout as e:
-        sys.exit("Weather: The request timed out while trying to connect to the remote server.")
-    except requests.exceptions.Timeout as e:
-        sys.exit("Weather: The request timed out.")
-    except requests.exceptions.TooManyRedirects as e:
-        sys.exit("Weather: Too many redirects.")
-    except requests.exceptions.ReadTimeout as e:
-        print("Weather: The server did not send any data in the allotted amount of time.")
-    except json.JSONDecodeError as e:
-        sys.exit("Weather: Couldn't decode the text into json.")
-    except requests.exceptions.RequestException as e:
-        sys.exit("Weather: Exception while handling request.")
+    return temp, description
 
 if __name__ == "__main__":
     main()
