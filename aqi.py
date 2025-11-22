@@ -12,7 +12,6 @@ class AQI():
         self.output = output
         self.aqi_value = aqi_value
 
-    @errorHandling
     def getAQI(self):
         response = requests.get(f"http://api.openweathermap.org/data/2.5/air_pollution?lat={self.latitude}&lon={self.longitude}&appid=ec9bfb9a31502ef8928de884db45d65d")
         response.raise_for_status()
@@ -25,6 +24,7 @@ class AQI():
 def main():
     postAQI()
 
+@errorHandling
 def fetchAQI(lat, lon):
     accessAQI = AQI(lat, lon).getAQI()
     return accessAQI

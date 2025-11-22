@@ -35,7 +35,7 @@ class Morning():
             writer = csv.DictWriter(csvfile, fieldnames=['timestamp', 'city', 'weather', 'description', 'aqi'])
             if not fileExists or os.path.getsize("data.csv") == 0:
                 writer.writeheader()
-            writer.writerow({'timestamp': timestamp, 'city': morningData['city'], 'weather': morningData['weather'], 'description': morningData['description'], 'aqi': morningData['aqi']})
+            writer.writerow({'timestamp': timestamp, 'city': morningData['city'], 'weather': round(morningData['weather']-273.15), 'description': morningData['description'], 'aqi': morningData['aqi']})
 
     def _formatOutput(self, morningData):
         self.output = f"The temperature in {morningData['city']} is {round(morningData['weather']-273.15)}°C with {morningData['description']} and the AQI is {morningData['aqi']}."

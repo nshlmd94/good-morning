@@ -2,3 +2,10 @@ timestamp,function,status,message
 2025-11-22 15:42:29.148204,locationAccess,Success,Successfully executed!
 2025-11-22 15:42:29.762279,fetchWeather,Success,Successfully executed!
 2025-11-22 15:42:29.935458,getAQI,Success,Successfully executed!
+2025-11-22 15:45:10.865944,locationAccess,Success,Successfully executed!
+2025-11-22 15:45:11.511011,fetchWeather,Success,Successfully executed!
+2025-11-22 15:45:11.680473,getAQI,Success,Successfully executed!
+2025-11-22 16:31:50.651407,locationAccess,Failure,"locationAccess: An error occured: KeyError, 'country_code'"
+2025-11-22 16:34:11.727799,locationAccess,Success,Successfully executed!
+2025-11-22 16:34:12.353672,fetchWeather,Success,Successfully executed!
+2025-11-22 16:34:12.549430,fetchAQI,Success,Successfully executed!
