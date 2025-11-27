@@ -1,3 +1,4 @@
+# fetches the location of the IP with an API
 import requests
 import json
 import sys
